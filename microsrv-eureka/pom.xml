@@ -54,6 +54,7 @@
                     <!--执行命令a：mvn clean package -Dmaven.test.skip=true-->
                     <!--执行命令b：mvn package docker:build-->
                     <!--必须先执行命令a然后执行命令b-->
+                    <!--docker镜像路径-->
                     <dockerDirectory>src/main/docker</dockerDirectory>
                     <resources>
                         <resource>
