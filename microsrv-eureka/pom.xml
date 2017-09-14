@@ -34,24 +34,34 @@
         </dependency>
     </dependencies>
     <build>
-       <finalName>${project.name}</finalName>
+        <finalName>${project.name}</finalName>
         <plugins>
+            <!--用来构建java spring fat jar文件-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <!-- tag::plugin[] -->
+            <!--构建docker 镜像-->
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>0.4.3</version>
+                <!--docker镜像相关配置，其实说白了就是构建docker镜像的全名称，例如：公司名称(提交的镜像中心):项目名称:版本-->
                 <configuration>
                     <imageName>${docker.image.prefix}/${project.artifactId}:${project.version}</imageName>
+                    <!--dockerfile配置文件路径，建议放在以下目录中，-->
+                    <!--执行命令a：mvn clean package -Dmaven.test.skip=true-->
+                    <!--执行命令b：mvn package docker:build-->
+                    <!--必须先执行命令a然后执行命令b-->
                     <dockerDirectory>src/main/docker</dockerDirectory>
                     <resources>
                         <resource>
+                            <!--项目root目录 例如 microsrv-eureka-->
                             <targetPath>/</targetPath>
+                            <!--构建目录一般是target 其实就是默认目录，如果指定别目录请考虑权限问题-->
                             <directory>${project.build.directory}</directory>
+                            <!--建议用去版本号的项目名，否则需要经常修改dockerfile，版本后可以放在imageName配置中进行处理-->
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
