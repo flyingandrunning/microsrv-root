@@ -14,6 +14,7 @@ import org.springframework.cloud.netflix.turbine.EnableTurbine;
 @EnableHystrixDashboard
 //开启多熔断器监控
 @EnableTurbine
+//启动注册到服务中心
 @EnableEurekaClient
 public class DashboradApp {
     public static void main(String[] args) {
